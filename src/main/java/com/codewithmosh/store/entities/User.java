@@ -30,7 +30,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval = true)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
@@ -44,15 +44,11 @@ public class User {
         address.setUser(null);
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Profile profile;
+    // @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    // private Profile profile;
 
     @ManyToMany
-    @JoinTable(
-        name = "wishlist",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+    @JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> favoriteProducts = new HashSet<>();
 
     public void addFavoriteProduct(Product product) {
@@ -64,6 +60,7 @@ public class User {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
                 "name = " + name + ", " +
+                "password = " + password + ", " +
                 "email = " + email + ")";
     }
 }
